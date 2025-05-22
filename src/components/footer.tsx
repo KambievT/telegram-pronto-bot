@@ -3,19 +3,19 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1070a4] flex justify-center my_rounded fixed bottom-0 w-full text-white py-5">
-      <nav className="flex items-center gap-16">
+    <footer className="bg-gray-700 flex justify-center my_rounded fixed bottom-0 w-full text-white py-5">
+      <nav className="flex items-center gap-13">
         <div>
-          <Home size={35} />
+          <Home size={32} />
         </div>
         <div>
-          <NotebookText size={35} />
+          <NotebookText size={32} />
         </div>
         <div>
-          <ShoppingBag size={35} />
+          <ShoppingBag size={32} />
         </div>
         <div>
-          <UserPen size={35} />
+          <UserPen size={32} />
         </div>
       </nav>
     </footer>
