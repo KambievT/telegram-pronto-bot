@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -10,15 +11,30 @@ export default function LayoutPage({
 }: {
   children: React.ReactNode;
 }) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
-    <ThemeProvider>
-      <AppRoot>
-        <div>
-          <Header />
-          {children}
-          <Footer />
+    <>
+      {isMounted ? (
+        <ThemeProvider>
+          <AppRoot>
+            <div>
+              <Header />
+              {children}
+              <Footer />
+            </div>
+          </AppRoot>
+        </ThemeProvider>
+      ) : (
+        // Optional: Render a loading spinner or placeholder while mounting
+        <div className="flex items-center justify-center min-h-screen">
+          {/* Loading... */}
         </div>
-      </AppRoot>
-    </ThemeProvider>
+      )}
+    </>
   );
 }
