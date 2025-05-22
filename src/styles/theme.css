@@ -1,0 +1,20 @@
+:root {
+  /* Светлая тема (по умолчанию) */
+  --tg-theme-bg-color: #ffffff;
+  --tg-theme-text-color: #000000;
+  --tg-theme-hint-color: #999999;
+  --tg-theme-link-color: #2678b6;
+  --tg-theme-button-color: #2678b6;
+  --tg-theme-button-text-color: #ffffff;
+  --tg-theme-secondary-bg-color: #f0f0f0;
+}
+
+[data-theme="dark"] {
+  --tg-theme-bg-color: #1f2936;
+  --tg-theme-text-color: #ffffff;
+  --tg-theme-hint-color: #aaaaaa;
+  --tg-theme-link-color: #6ab2f2;
+  --tg-theme-button-color: #6ab2f2;
+  --tg-theme-button-text-color: #ffffff;
+  --tg-theme-secondary-bg-color: #2a3441;
+}
