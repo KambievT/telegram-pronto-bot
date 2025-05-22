@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -76,11 +77,14 @@ export default function PopularProducts() {
             onClick={() => handleCardClick(product)}
             layoutId={`product-${product.id}`}
           >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-48 object-cover"
-            />
+            <div className="relative w-full h-48">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill={true}
+                style={{ objectFit: "cover" }}
+              />
+            </div>
             <div className="p-4 text-gray-900 dark:text-white">
               <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -105,11 +109,14 @@ export default function PopularProducts() {
               layoutId={`product-${selectedProduct.id}`}
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-                className="w-full h-64 object-cover"
-              />
+              <div className="relative w-full h-64">
+                <Image
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-2xl font-semibold mb-2">
                   {selectedProduct.name}

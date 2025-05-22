@@ -2,19 +2,29 @@
 
 import React from "react";
 import { Button } from "@telegram-apps/telegram-ui";
+import Image from "next/image";
 
-// Placeholder image URL
+const heroImage =
+  "https://avatars.mds.yandex.net/get-altay/2359468/2a000001726fc0375656e88bcea1cf2f7603/XXXL"; // Replace with actual image
 const slogan = "Бодрое утро начинается с Pronto";
 
 export default function FirstSection() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
-      <img
-        src="https://avatars.mds.yandex.net/get-altay/2359468/2a000001726fc0375656e88bcea1cf2f7603/XXXL"
-        alt="Pronto Cafe Hero Image"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-[#00000051] bg-opacity-50"></div>
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <Image
+          src={heroImage}
+          alt="Pronto Cafe Hero Image"
+          fill={true}
+          style={{ objectFit: "cover" }}
+        />
+      </div>
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50 bg-opacity-50"></div>
+
+      {/* Content */}
       <div className="relative z-10 text-white text-center p-4">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">{slogan}</h2>
         <div className="flex flex-col md:flex-row gap-4 justify-center">

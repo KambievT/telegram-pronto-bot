@@ -12,8 +12,8 @@ export default function ShortDescription() {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6 }}
       >
-        "Pronto Cafe — это уютное место для любителей ароматного кофе и вкусных
-        десертов."
+        &quot;Pronto Cafe &mdash; это уютное место для любителей ароматного кофе
+        и вкусных десертов.&quot;
       </motion.p>
     </section>
   );
