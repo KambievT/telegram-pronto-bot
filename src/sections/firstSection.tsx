@@ -30,13 +30,13 @@ export default function FirstSection() {
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Button
             onClick={() => console.log("Посмотреть меню clicked")}
-            className="bg-gray-700/50 rounded-xl py-3 backdrop-blur-2xl"
+            className="bg-gray-700/50 rounded-xl py-3 px-2 backdrop-blur-2xl"
           >
             Посмотреть меню
           </Button>
           <Button
             onClick={() => console.log("Сделать заказ clicked")}
-            className="bg-gray-700/50 rounded-xl py-3 backdrop-blur-2xl"
+            className="bg-gray-700/50 rounded-xl py-3 px-2 backdrop-blur-2xl"
           >
             Сделать заказ
           </Button>

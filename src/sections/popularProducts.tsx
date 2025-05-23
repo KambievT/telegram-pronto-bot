@@ -63,19 +63,15 @@ export default function PopularProducts() {
       <h2 className="text-3xl font-bold text-center mb-8">
         Популярные товары / блюда
       </h2>
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <motion.div
             key={product.id}
             className="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-200 dark:border-gray-600"
             onClick={() => handleCardClick(product)}
-            layoutId={`product-${product.id}`}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <div className="relative w-full h-48">
               <Image
@@ -83,6 +79,8 @@ export default function PopularProducts() {
                 alt={product.name}
                 fill={true}
                 style={{ objectFit: "cover" }}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               />
             </div>
             <div className="p-4 text-gray-900 dark:text-white">
@@ -93,20 +91,24 @@ export default function PopularProducts() {
             </div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {selectedProduct && (
           <motion.div
-            className="fixed inset-0 bg-[#00000058] bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleCloseModal}
+            transition={{ duration: 0.2 }}
           >
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-xl max-w-md w-full m-4 relative text-gray-900 dark:text-white"
-              layoutId={`product-${selectedProduct.id}`}
+              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-xl max-w-md w-full relative text-gray-900 dark:text-white"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative w-full h-64">
@@ -115,6 +117,7 @@ export default function PopularProducts() {
                   alt={selectedProduct.name}
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               </div>
               <div className="p-6">
