@@ -37,7 +37,7 @@ export default function Header() {
           <Link href="/">Главная</Link>
           <Link href="/">Меню</Link>
           <Link href="/">Корзина</Link>
-          <Link href="/">Профиль</Link>
+          <Link href="/profile">Профиль</Link>
         </nav>
       </header>
     </>

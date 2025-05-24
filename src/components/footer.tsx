@@ -1,14 +1,15 @@
 import { Home, NotebookText, ShoppingBag, UserPen } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
   return (
     <footer className="bg-gray-700/80 backdrop-blur-2xl flex flex-col items-center justify-center my_rounded fixed bottom-0 w-full text-white py-5">
       <nav className="flex items-center gap-8" id="footer__nav">
-        <div className="flex flex-col items-center">
+        <Link href="/" className="flex flex-col items-center">
           <Home size={32} />
           <span className="text-sm mt-1">Главная</span>
-        </div>
+        </Link>
         <div className="flex flex-col items-center">
           <NotebookText size={32} />
           <span className="text-sm mt-1">Меню</span>
@@ -17,10 +18,10 @@ export default function Footer() {
           <ShoppingBag size={32} />
           <span className="text-sm mt-1">Корзина</span>
         </div>
-        <div className="flex flex-col items-center">
+        <Link href="/profile" className="flex flex-col items-center">
           <UserPen size={32} />
           <span className="text-sm mt-1">Профиль</span>
-        </div>
+        </Link>
       </nav>
 
       <div className="footer__content  text-center w-full max-w-2xl px-4">
