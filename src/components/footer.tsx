@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-700 flex flex-col items-center justify-center my_rounded fixed bottom-0 w-full text-white py-5">
+    <footer className="bg-gray-700/80 backdrop-blur-2xl flex flex-col items-center justify-center my_rounded fixed bottom-0 w-full text-white py-5">
       <nav className="flex items-center gap-8" id="footer__nav">
         <div className="flex flex-col items-center">
           <Home size={32} />

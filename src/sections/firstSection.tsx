@@ -5,13 +5,12 @@ import { Button } from "@telegram-apps/telegram-ui";
 import Image from "next/image";
 
 const heroImage =
-  "https://avatars.mds.yandex.net/get-altay/2359468/2a000001726fc0375656e88bcea1cf2f7603/XXXL"; // Replace with actual image
+  "https://avatars.mds.yandex.net/get-altay/2359468/2a000001726fc0375656e88bcea1cf2f7603/XXXL";
 const slogan = "Бодрое утро начинается с Pronto";
 
 export default function FirstSection() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
-      {/* Background image */}
       <div className="absolute inset-0">
         <Image
           src={heroImage}
@@ -20,11 +19,7 @@ export default function FirstSection() {
           style={{ objectFit: "cover" }}
         />
       </div>
-
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/50 bg-opacity-50"></div>
-
-      {/* Content */}
       <div className="relative z-10 text-white text-center p-4">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">{slogan}</h2>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
