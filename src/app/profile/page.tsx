@@ -2,6 +2,62 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+// Объявление типов для Telegram WebApp API
+// Удалено глобальное объявление типов, чтобы избежать конфликта
+/*
+declare global {
+  interface Window {
+    Telegram?: {
+      WebApp?: {
+        ready: () => void;
+        initDataUnsafe: {
+          user?: {
+            id: number;
+            is_bot?: boolean;
+            first_name: string;
+            last_name?: string;
+            username?: string;
+            language_code?: string;
+            is_premium?: boolean;
+            added_to_attachment_menu?: boolean;
+          };
+          query_id?: string;
+          receiver?: any;
+          chat?: any;
+          auth_date: number;
+          hash: string;
+        };
+        expand: () => void;
+        close: () => void;
+        version: string;
+        platform: string;
+        colorScheme: string;
+        backgroundColor: string;
+        textColor: string;
+        hintColor: string;
+        linkColor: string;
+        buttonColor: string;
+        buttonTextColor: string;
+        headerColor: string;
+        secondaryBackgroundColor: string;
+        isExpanded: boolean;
+        viewportHeight: number;
+        viewportStableHeight: number;
+        isClosingConfirmationEnabled: boolean;
+        themeParams: any; // Consider defining a more specific type if needed
+        settingsButton: any; // Consider defining a more specific type if needed
+        MainButton: any; // Consider defining a more specific type if needed
+        BackButton: any; // Consider defining a more specific type if needed
+        setHeaderColor: (color: string) => void;
+        setBackgroundColor: (color: string) => void;
+        onEvent: (eventType: string, callback: (...args: any[]) => void) => void;
+        offEvent: (eventType: string, callback: (...args: any[]) => void) => void;
+      };
+    };
+  }
+}
+*/
+
 export default function Profile() {
   const [telegramId, setTelegramId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -9,33 +65,40 @@ export default function Profile() {
   const [profileData, setProfileData] = useState<any>(null);
 
   useEffect(() => {
-    // Проверяем, что код выполняется в браузере
-    if (typeof window !== "undefined") {
-      // Получаем query-параметры из текущего URL
-      const params = new URLSearchParams(window.location.search);
-      const idFromUrl = params.get("telegramId");
+    // Проверяем, что код выполняется в браузере и объект Telegram WebApp доступен
+    if (
+      typeof window !== "undefined" &&
+      window.Telegram &&
+      window.Telegram.WebApp
+    ) {
+      const webApp = window.Telegram.WebApp as any; // Используем утверждение типа
+      webApp.ready(); // Уведомляем Telegram о готовности WebApp
 
-      if (idFromUrl) {
-        setTelegramId(idFromUrl);
-        // Переводим isLoading в false, так как telegramId получен
+      // Используем initDataUnsafe для получения данных пользователя
+      const user = webApp.initDataUnsafe?.user;
+
+      if (user?.id) {
+        setTelegramId(user.id.toString()); // Telegram ID всегда числовой, преобразуем в строку
         setIsLoading(false);
       } else {
-        // Если telegramId не найден в URL
-        setError("Telegram ID not found in URL.");
+        setError("Telegram user ID not found in initDataUnsafe.");
         setIsLoading(false);
-        console.warn("Telegram ID not found in URL query parameters.");
+        console.warn("Telegram user data not found in initDataUnsafe.");
       }
     } else {
-      // Если код не выполняется в браузере (например, на сервере)
-      setError("This component should be rendered in a browser.");
+      // Если код не выполняется в браузере или объект Telegram WebApp недоступен
+      setError(
+        "Telegram WebApp object not found or not in browser environment."
+      );
       setIsLoading(false);
+      console.warn("Telegram WebApp object not found.");
     }
   }, []); // Этот эффект выполняется один раз при монтировании компонента на клиенте
 
   useEffect(() => {
     const fetchUserProfile = async (id: string) => {
-      setIsLoading(true); // Начинаем загрузку при получении telegramId
-      setError(null); // Сбрасываем предыдущие ошибки
+      setIsLoading(true);
+      setError(null);
       try {
         console.log("Fetching profile for telegramId:", id);
         const response = await axios.post(
@@ -50,7 +113,7 @@ export default function Profile() {
         console.error("Error fetching profile:", err);
         setError("Failed to fetch profile.");
       } finally {
-        setIsLoading(false); // Завершаем загрузку после попытки получения профиля
+        setIsLoading(false);
       }
     };
 
@@ -69,8 +132,7 @@ export default function Profile() {
   }
 
   if (telegramId === null) {
-    // Это состояние будет достигнуто, если telegramId не был найден в URL
-    return <div>Telegram user ID not available from URL.</div>;
+    return <div>Telegram user ID not available.</div>;
   }
 
   return (
