@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 
 declare global {
@@ -32,6 +33,12 @@ export default function Header() {
             Pronto Cafe
           </h1>
         </div>
+        <nav className="flex items-center gap-5" id="header__nav">
+          <Link href="/">Главная</Link>
+          <Link href="/">Меню</Link>
+          <Link href="/">Корзина</Link>
+          <Link href="/">Профиль</Link>
+        </nav>
       </header>
     </>
   );

@@ -38,3 +38,27 @@ html {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@media (max-width: 500px) {
+  #header__nav {
+    display: none;
+  }
+  #footer__nav {
+    display: flex;
+  }
+  .footer__content {
+    display: none;
+  }
+}
+
+@media (min-width: 500px) {
+  #header__nav {
+    display: flex;
+  }
+  #footer__nav {
+    display: none;
+  }
+  .footer__content {
+    display: block;
+  }
+}

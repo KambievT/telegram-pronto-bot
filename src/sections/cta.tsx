@@ -30,7 +30,7 @@ const CTA = () => {
               Перейти в телеграмм бота
             </a>
             <a
-              href="mailto:your@email.com"
+              href="#"
               className="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-300"
             >
               <NotebookText className="mx-2" />
