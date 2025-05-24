@@ -2,11 +2,42 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+// Определяем интерфейс для данных профиля
+interface UserProfile {
+  id: number;
+  telegramId: string;
+  username?: string | null;
+  firstName: string;
+  lastName?: string | null;
+  photoUrl?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Определяем минимальный интерфейс для Telegram WebApp, используемый здесь
+interface MinimalTelegramWebApp {
+  ready: () => void;
+  initDataUnsafe?: {
+    user?: {
+      id: number;
+      is_bot?: boolean;
+      first_name: string;
+      last_name?: string;
+      username?: string;
+      language_code?: string;
+      is_premium?: boolean;
+      added_to_attachment_menu?: boolean;
+    };
+    // Добавьте другие поля из initDataUnsafe, если они понадобятся
+  };
+  // Добавьте другие методы/свойства WebApp, если они понадобятся
+}
+
 export default function Profile() {
   const [telegramId, setTelegramId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [profileData, setProfileData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<UserProfile | null>(null); // Используем UserProfile или null
 
   useEffect(() => {
     // Проверяем, что код выполняется в браузере и объект Telegram WebApp доступен
@@ -15,7 +46,7 @@ export default function Profile() {
       window.Telegram &&
       window.Telegram.WebApp
     ) {
-      const webApp = window.Telegram.WebApp as any; // Используем утверждение типа
+      const webApp = window.Telegram.WebApp as unknown as MinimalTelegramWebApp; // Используем утверждение типа через unknown
       webApp.ready(); // Уведомляем Telegram о готовности WebApp
 
       // Используем initDataUnsafe для получения данных пользователя
@@ -45,7 +76,7 @@ export default function Profile() {
       setError(null);
       try {
         console.log("Fetching profile for telegramId:", id);
-        const response = await axios.post(
+        const response = await axios.post<UserProfile>( // Указываем тип ответа
           "http://localhost:4000/auth/get-profile",
           {
             telegramId: id,
@@ -55,7 +86,16 @@ export default function Profile() {
         setProfileData(response.data);
       } catch (err) {
         console.error("Error fetching profile:", err);
-        setError("Failed to fetch profile.");
+        // Проверяем, является ли ошибка ошибкой Axios с ответом
+        if (axios.isAxiosError(err) && err.response) {
+          setError(
+            `Failed to fetch profile: ${err.response.status} ${err.response.statusText}`
+          );
+        } else if (err instanceof Error) {
+          setError(`Failed to fetch profile: ${err.message}`);
+        } else {
+          setError("Failed to fetch profile: An unknown error occurred.");
+        }
       } finally {
         setIsLoading(false);
       }
@@ -85,9 +125,11 @@ export default function Profile() {
       {profileData ? (
         <div>
           <p>Telegram ID: {telegramId}</p>
-          {profileData.username && <p>Username: {profileData.username}</p>}
-          {profileData.firstName && <p>First Name: {profileData.firstName}</p>}
-          {profileData.lastName && <p>Last Name: {profileData.lastName}</p>}
+          {/* Используем опциональную цепочку (?) при доступе к свойствам profileData */}
+          {profileData?.username && <p>Username: {profileData.username}</p>}
+          {profileData?.firstName && <p>First Name: {profileData.firstName}</p>}
+          {profileData?.lastName && <p>Last Name: {profileData.lastName}</p>}
+          {/* Отображаем остальные данные профиля в виде JSON для отладки */}
           <pre>{JSON.stringify(profileData, null, 2)}</pre>
         </div>
       ) : (
