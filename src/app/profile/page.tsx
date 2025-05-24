@@ -79,12 +79,12 @@ export default function Profile() {
       {profileData ? (
         <div>
           <p>Telegram ID: {telegramId}</p>
-          {/* Отобразите другие данные профиля, если они есть в profileData */}
+          {profileData.username && <p>Username: {profileData.username}</p>}
+          {profileData.firstName && <p>First Name: {profileData.firstName}</p>}
+          {profileData.lastName && <p>Last Name: {profileData.lastName}</p>}
           <pre>{JSON.stringify(profileData, null, 2)}</pre>
         </div>
       ) : (
-        // Этот текст, вероятно, не будет показан при текущей логике,
-        // так как profileData будет null только пока isLoading true или есть error.
         <p>Loading profile data...</p>
       )}
     </div>
