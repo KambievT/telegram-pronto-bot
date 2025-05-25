@@ -10,8 +10,15 @@ export default function Home() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const telegramId = params.get("telegramId");
+    const savedTelegramId = localStorage.getItem("telegramId");
+
     if (telegramId) {
-      localStorage.setItem("telegramId", telegramId);
+      if (savedTelegramId !== telegramId) {
+        localStorage.removeItem("telegramId");
+        localStorage.setItem("telegramId", telegramId);
+      }
+    } else if (savedTelegramId) {
+      localStorage.removeItem("telegramId");
     }
   }, []);
 
