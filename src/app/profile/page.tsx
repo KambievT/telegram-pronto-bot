@@ -1,140 +1,100 @@
 "use client";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-// Определяем интерфейс для данных профиля
-interface UserProfile {
-  id: number;
-  telegramId: string;
-  username?: string | null;
-  firstName: string;
-  lastName?: string | null;
-  photoUrl?: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Определяем минимальный интерфейс для Telegram WebApp, используемый здесь
-interface MinimalTelegramWebApp {
-  ready: () => void;
-  initDataUnsafe?: {
-    user?: {
-      id: number;
-      is_bot?: boolean;
-      first_name: string;
-      last_name?: string;
-      username?: string;
-      language_code?: string;
-      is_premium?: boolean;
-      added_to_attachment_menu?: boolean;
-    };
-    // Добавьте другие поля из initDataUnsafe, если они понадобятся
-  };
-  // Добавьте другие методы/свойства WebApp, если они понадобятся
+interface ProfileData {
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  photoUrl?: string;
 }
 
 export default function Profile() {
-  const [telegramId, setTelegramId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [profileData, setProfileData] = useState<UserProfile | null>(null); // Используем UserProfile или null
+  const telegramId = localStorage.getItem("telegramId");
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Проверяем, что код выполняется в браузере и объект Telegram WebApp доступен
-    if (
-      typeof window !== "undefined" &&
-      window.Telegram &&
-      window.Telegram.WebApp
-    ) {
-      const webApp = window.Telegram.WebApp as unknown as MinimalTelegramWebApp; // Используем утверждение типа через unknown
-      webApp.ready(); // Уведомляем Telegram о готовности WebApp
-
-      // Используем initDataUnsafe для получения данных пользователя
-      const user = webApp.initDataUnsafe?.user;
-
-      if (user?.id) {
-        setTelegramId(user.id.toString()); // Telegram ID всегда числовой, преобразуем в строку
-        setIsLoading(false);
-      } else {
-        setError("Telegram user ID not found in initDataUnsafe.");
-        setIsLoading(false);
-        console.warn("Telegram user data not found in initDataUnsafe.");
-      }
-    } else {
-      // Если код не выполняется в браузере или объект Telegram WebApp недоступен
-      setError(
-        "Telegram WebApp object not found or not in browser environment."
-      );
-      setIsLoading(false);
-      console.warn("Telegram WebApp object not found.");
-    }
-  }, []); // Этот эффект выполняется один раз при монтировании компонента на клиенте
-
-  useEffect(() => {
-    const fetchUserProfile = async (id: string) => {
-      setIsLoading(true);
-      setError(null);
+    const getProfile = async () => {
       try {
-        console.log("Fetching profile for telegramId:", id);
-        const response = await axios.post<UserProfile>( // Указываем тип ответа
-          "http://localhost:4000/auth/get-profile",
-          {
-            telegramId: id,
-          }
-        );
-        console.log("Profile data:", response.data);
-        setProfileData(response.data);
-      } catch (err) {
-        console.error("Error fetching profile:", err);
-        // Проверяем, является ли ошибка ошибкой Axios с ответом
-        if (axios.isAxiosError(err) && err.response) {
-          setError(
-            `Failed to fetch profile: ${err.response.status} ${err.response.statusText}`
-          );
-        } else if (err instanceof Error) {
-          setError(`Failed to fetch profile: ${err.message}`);
-        } else {
-          setError("Failed to fetch profile: An unknown error occurred.");
+        setLoading(true);
+        const response = await fetch("http://localhost:4000/auth/get-profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ telegramId }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
+
+        const data = await response.json();
+        setProfileData(data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
-    // Вызываем fetchUserProfile только если telegramId получен и не является null
-    if (telegramId !== null) {
-      fetchUserProfile(telegramId);
-    }
-  }, [telegramId]); // Этот эффект выполняется при изменении telegramId
+    getProfile();
+  }, [telegramId]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (telegramId === null) {
-    return <div>Telegram user ID not available.</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1>Profile Page</h1>
-      {profileData ? (
-        <div>
-          <p>Telegram ID: {telegramId}</p>
-          {/* Используем опциональную цепочку (?) при доступе к свойствам profileData */}
-          {profileData?.username && <p>Username: {profileData.username}</p>}
-          {profileData?.firstName && <p>First Name: {profileData.firstName}</p>}
-          {profileData?.lastName && <p>Last Name: {profileData.lastName}</p>}
-          {/* Отображаем остальные данные профиля в виде JSON для отладки */}
-          <pre>{JSON.stringify(profileData, null, 2)}</pre>
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-32"></div>
+
+          <div className="relative px-8 py-6">
+            <div className="absolute -top-16 left-8">
+              {profileData?.photoUrl ? (
+                <img
+                  src={profileData.photoUrl}
+                  alt="Profile"
+                  className="h-32 w-32 rounded-full border-4 border-white shadow-lg"
+                />
+              ) : (
+                <div className="h-32 w-32 rounded-full border-4 border-white shadow-lg bg-gray-200 flex items-center justify-center">
+                  <span className="text-4xl text-gray-400">👤</span>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-16">
+              <h1 className="text-3xl font-bold text-gray-900">
+                {profileData?.firstName} {profileData?.lastName}
+              </h1>
+              <p className="text-gray-600 mt-1">@{profileData?.username}</p>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-sm font-medium text-gray-500">
+                  Telegram ID
+                </h3>
+                <p className="mt-1 text-lg text-gray-900">{telegramId}</p>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-sm font-medium text-gray-500">Username</h3>
+                <p className="mt-1 text-lg text-gray-900">
+                  @{profileData?.username}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      ) : (
-        <p>Loading profile data...</p>
-      )}
+      </div>
     </div>
   );
 }
