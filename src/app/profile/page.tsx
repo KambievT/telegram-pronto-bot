@@ -17,13 +17,16 @@ export default function Profile() {
     const getProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:4000/auth/get-profile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ telegramId }),
-        });
+        const response = await fetch(
+          "https://tg-pronto-backend-production.up.railway.app/auth/get-profile",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ telegramId }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -33,6 +36,7 @@ export default function Profile() {
         setProfileData(data);
       } catch (error) {
         console.error("Error fetching profile:", error);
+        alert(error);
       } finally {
         setLoading(false);
       }
@@ -44,7 +48,7 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-11 w-11 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -53,7 +57,7 @@ export default function Profile() {
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-32"></div>
+          <div className="bg-gray-700 h-32"></div>
 
           <div className="relative px-8 py-6">
             <div className="absolute -top-16 left-8">
@@ -64,7 +68,7 @@ export default function Profile() {
                   className="h-32 w-32 rounded-full border-4 border-white shadow-lg"
                 />
               ) : (
-                <div className="h-32 w-32 rounded-full border-4 border-white shadow-lg bg-gray-200 flex items-center justify-center">
+                <div className="h-32 w-32 rounded-full border-4 border-white shadow-lg bg-gray-600 flex items-center justify-center">
                   <span className="text-4xl text-gray-400">👤</span>
                 </div>
               )}

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -14,7 +15,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 html {
@@ -39,7 +40,7 @@ html {
   scrollbar-width: none; /* Firefox */
 }
 
-@media (max-width: 500px) {
+@media (max-width: 750px) {
   #header__nav {
     display: none;
   }
@@ -51,7 +52,7 @@ html {
   }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 750px) {
   #header__nav {
     display: flex;
   }
