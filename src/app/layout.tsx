@@ -1,7 +1,12 @@
+"use client";
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MyLayout from "@/layouts/myLayout";
+import { AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,15 +24,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const pathname = usePathname();
+
   return (
-    <html lang="en">
+    <html lang="ru">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <MyLayout>{children}</MyLayout>
+        <AnimatePresence mode="wait">
+          <MyLayout>{children}</MyLayout>
+        </AnimatePresence>
       </body>
     </html>
   );
