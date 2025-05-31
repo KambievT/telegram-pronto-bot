@@ -3,7 +3,6 @@ import SelectedProduct from "@/components/selected-product";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useState } from "react";
-import PageTransition from "@/components/page-transition";
 
 interface Product {
   id: number;
@@ -59,7 +58,7 @@ export default function Menu() {
     },
   ];
   return (
-    <PageTransition>
+    <>
       <section className="py-12 px-4 relative mb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {products?.map((product) => (
@@ -99,6 +98,6 @@ export default function Menu() {
           )}
         </AnimatePresence>
       </section>
-    </PageTransition>
+    </>
   );
 }
