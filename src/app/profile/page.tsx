@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CafeLoader from "@/components/cafe-loader";
 
 interface ProfileData {
   username?: string;
@@ -47,11 +46,15 @@ export default function Profile() {
   }, [telegramId]);
 
   if (loading) {
-    return <CafeLoader />;
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-11 w-11 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 mb-20">
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 mb">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow-xl rounded-lg overflow-hidden">
           <div className="bg-gray-700 h-32"></div>
