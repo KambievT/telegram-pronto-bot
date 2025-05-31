@@ -10,10 +10,10 @@ export default function Footer() {
           <Home size={32} />
           <span className="text-sm mt-1">Главная</span>
         </Link>
-        <div className="flex flex-col items-center">
+        <Link href="/menu" className="flex flex-col items-center">
           <NotebookText size={32} />
           <span className="text-sm mt-1">Меню</span>
-        </div>
+        </Link>
         <div className="flex flex-col items-center">
           <ShoppingBag size={32} />
           <span className="text-sm mt-1">Корзина</span>

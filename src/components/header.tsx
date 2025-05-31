@@ -80,7 +80,7 @@ export default function Header() {
               Главная
             </Link>
             <Link
-              href="/"
+              href="/menu"
               className="hover:opacity-80 transition-opacity font-medium"
               style={{
                 transitionDelay: isVisible ? "1200ms" : "0ms",
