@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/product-card";
 import SelectedProduct from "@/components/selected-product";
+import { motion } from "framer-motion";
 
 interface Product {
   id: number;
@@ -60,18 +61,42 @@ export default function PopularProducts() {
   };
 
   return (
-    <section className="py-12 px-4 relative mb-10">
-      <h2 className="text-3xl font-bold text-center mb-8">
-        Популярные товары / блюда
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            handleCardClick={handleCardClick}
-          />
-        ))}
+    <section className="py-20 px-4 relative mb-10 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <motion.h2
+          className="text-4xl font-bold text-center mb-4 text-gray-900"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          Популярные блюда
+        </motion.h2>
+        <motion.p
+          className="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          Попробуйте наши самые популярные блюда и напитки
+        </motion.p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <ProductCard
+                product={product}
+                handleCardClick={handleCardClick}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       <AnimatePresence>

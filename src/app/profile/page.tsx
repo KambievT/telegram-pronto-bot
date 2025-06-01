@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface ProfileData {
   username?: string;
@@ -62,9 +63,11 @@ export default function Profile() {
           <div className="relative px-8 py-6">
             <div className="absolute -top-16 left-8">
               {profileData?.photoUrl ? (
-                <img
+                <Image
                   src={profileData.photoUrl}
                   alt="Profile"
+                  width={128}
+                  height={128}
                   className="h-32 w-32 rounded-full border-4 border-white shadow-lg"
                 />
               ) : (

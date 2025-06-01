@@ -2,18 +2,20 @@
 import SelectedProduct from "@/components/selected-product";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Product {
   id: number;
   name: string;
   price: string;
   image: string;
-  description?: string; // Added optional description field
+  category: string;
+  description?: string;
 }
 
 export default function Menu() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const handleCardClick = (product: Product) => {
     setSelectedProduct(product);
@@ -23,40 +25,21 @@ export default function Menu() {
     setSelectedProduct(null);
   };
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "Капучино",
-      price: "150 ₽",
-      image:
-        "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-      description: "Классический капучино с пышной молочной пенкой.",
-    },
-    {
-      id: 2,
-      name: "Латте",
-      price: "160 ₽", // Placeholder price
-      image:
-        "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-      description: "Нежный латте с большим количеством молока.",
-    },
-    {
-      id: 3,
-      name: "Печенье",
-      price: "80 ₽", // Placeholder price
-      image:
-        "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-      description: "Свежее домашнее печенье в ассортименте.",
-    },
-    {
-      id: 4,
-      name: "Сэндвич",
-      price: "250 ₽", // Placeholder price
-      image:
-        "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-      description: "Сытный сэндвич с курицей и овощами.",
-    },
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "https://tg-pronto-backend-production.up.railway.app/menu/get-menu"
+        );
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <section className="py-12 px-4 relative mb-10">
@@ -83,7 +66,7 @@ export default function Menu() {
               <div className="p-4 text-gray-900 dark:text-white">
                 <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {product.price}
+                  {product.price} ₽
                 </p>
               </div>
             </motion.div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -21,8 +22,8 @@ const features = [
     ),
   },
   {
-    title: "Гарантия качества",
-    description: "Все товары проходят тщательную проверку перед отправкой",
+    title: "Гарантия качества и свежести",
+    description: "Все блюда проходят тщательную проверку перед отправкой",
     icon: (
       <svg
         className="w-6 h-6"
@@ -65,7 +66,13 @@ const Features = () => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Почему выбирают нас
           </h2>
@@ -73,20 +80,26 @@ const Features = () => {
             Мы стремимся предоставить лучший сервис и качество для наших
             клиентов
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-gray-700 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="text-blue-600 mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-2">
+              <div className="text-blue-400 mb-6 text-4xl">{feature.icon}</div>
+              <h3 className="text-xl font-semibold text-white mb-4">
                 {feature.title}
               </h3>
-              <p className="text-gray-200">{feature.description}</p>
-            </div>
+              <p className="text-gray-200 leading-relaxed">
+                {feature.description}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,24 +1,38 @@
 import { NotebookText } from "lucide-react";
 import React from "react";
+import { motion } from "framer-motion";
 
 const CTA = () => {
   return (
-    <section className="py-20 bg-gray-700 mb-20">
+    <section className="py-24 bg-gray-700 mb-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Готовы заказать наши блюда?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Можете перейти в меню и посмотреть что у нас есть
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Готовы заказать наши блюда?
+            </h2>
+            <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
+              Можете перейти в меню и посмотреть что у нас есть
+            </p>
+          </motion.div>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
+          <motion.div
+            className="flex flex-col md:flex-row justify-center items-center gap-6 mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <a
-              href="https://t.me/your_bot_username"
+              href=""
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-300"
+              className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
             >
               <svg
                 className="w-6 h-6 mr-2"
@@ -31,33 +45,39 @@ const CTA = () => {
             </a>
             <a
               href="#"
-              className="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-300"
+              className="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1"
             >
               <NotebookText className="mx-2" />
               Смотреть меню
             </a>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="p-6 bg-white/10 rounded-lg backdrop-blur-sm">
-              <h3 className="text-xl font-semibold text-white mb-2">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="p-8 bg-white/10 rounded-xl backdrop-blur-sm hover:bg-white/15 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Связь с нами
               </h3>
               <p className="text-blue-100">+799999999</p>
             </div>
-            <div className="p-6 bg-white/10 rounded-lg backdrop-blur-sm">
-              <h3 className="text-xl font-semibold text-white mb-2">
+            <div className="p-8 bg-white/10 rounded-xl backdrop-blur-sm hover:bg-white/15 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Время работы
               </h3>
               <p className="text-blue-100">С 11:00 до 23:00</p>
             </div>
-            <div className="p-6 bg-white/10 rounded-lg backdrop-blur-sm">
-              <h3 className="text-xl font-semibold text-white mb-2">
+            <div className="p-8 bg-white/10 rounded-xl backdrop-blur-sm hover:bg-white/15 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Наш адрес
               </h3>
               <p className="text-blue-100">ул.Ленина,125,село Успенское</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
