@@ -59,7 +59,7 @@ export default function Menu() {
 
   return (
     <>
-      <section className="py-12 px-4 relative mb-10">
+      <section className="py-12 px-4 relative mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {products?.map((product, index) => (
             <motion.div
@@ -75,8 +75,7 @@ export default function Menu() {
                 damping: 17,
               }}
               onClick={() => handleCardClick(product)}
-              className="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-200 dark:border-gray-600"
-              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg duration-300 cursor-pointer border border-gray-200 dark:border-gray-600 hover:scale-105 transition-all"
               whileTap={{ scale: 0.98 }}
             >
               <div className="relative w-full h-48">
