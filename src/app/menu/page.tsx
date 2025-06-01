@@ -3,7 +3,6 @@ import SelectedProduct from "@/components/selected-product";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Search } from "lucide-react";
 import FilterProducts from "@/components/filterProducts";
 
 interface Product {
