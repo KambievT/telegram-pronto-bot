@@ -16,6 +16,7 @@ interface Product {
 export default function Menu() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleCardClick = (product: Product) => {
     setSelectedProduct(product);
@@ -29,16 +30,32 @@ export default function Menu() {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://tg-pronto-backend-production.up.railway.app/menu/get-menu"
+          "https://tg-pronto-backend-production.up.railway.app/menu/get-menu",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         const data = await response.json();
         setProducts(data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setLoading(false);
       }
     };
     fetchProducts();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-11 w-11 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <>
