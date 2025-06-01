@@ -63,3 +63,21 @@ html {
     display: block;
   }
 }
+
+@media (max-width: 410px) {
+  #filter_btns {
+    display: none;
+  }
+  #all_cat_btns {
+    display: block;
+  }
+}
+
+@media (min-width: 410px) {
+  #filter_btns {
+    display: flex;
+  }
+  #all_cat_btns {
+    display: none;
+  }
+}

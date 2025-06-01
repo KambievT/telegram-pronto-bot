@@ -3,6 +3,8 @@ import SelectedProduct from "@/components/selected-product";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { Search } from "lucide-react";
+import FilterProducts from "@/components/filterProducts";
 
 interface Product {
   id: number;
@@ -17,6 +19,8 @@ export default function Menu() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const handleCardClick = (product: Product) => {
     setSelectedProduct(product);
@@ -49,6 +53,20 @@ export default function Menu() {
     fetchProducts();
   }, []);
 
+  const categories = [
+    "all",
+    ...new Set(products.map((product) => product.category)),
+  ];
+
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -60,8 +78,18 @@ export default function Menu() {
   return (
     <>
       <section className="py-12 px-4 relative mb-20">
+        <h1 className="text-3xl text-center mb-10">Наше меню</h1>
+
+        <FilterProducts
+          searchQuery={searchQuery}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          setSearchQuery={setSearchQuery}
+          categories={categories}
+        />
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products?.map((product, index) => (
+          {filteredProducts.map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}

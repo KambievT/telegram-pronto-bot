@@ -7,7 +7,8 @@ interface Product {
   name: string;
   price: string;
   image: string;
-  description?: string; // Added optional description field
+  category: string;
+  description?: string;
 }
 
 interface props {

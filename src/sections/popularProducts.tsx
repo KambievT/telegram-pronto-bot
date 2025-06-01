@@ -10,42 +10,50 @@ interface Product {
   name: string;
   price: string;
   image: string;
+  category: string;
   description?: string; // Added optional description field
 }
 
-//Массив популярных продуктов
 const products: Product[] = [
   {
     id: 1,
-    name: "Капучино",
-    price: "150 ₽",
+    name: "Гиро с курицей",
+    description:
+      "Гиро с курицей — это неповторимое гастрономическое произведение,которое погружает в атмосферу традиционного арабского блюда.",
     image:
-      "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-    description: "Классический капучино с пышной молочной пенкой.",
+      "https://avatars.mds.yandex.net/get-sprav-products/1521147/2a00000191dc54204fcba1a76cff4a9339cd/orig",
+    price: "225 ₽",
+    category: "Шаурма",
   },
   {
     id: 2,
-    name: "Латте",
-    price: "160 ₽", // Placeholder price
+    name: "Классический бургер",
+    description:
+      "Булка, котлета говяжья, лук красный, сыр чеддер, томаты, салат, соус песто",
     image:
-      "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-    description: "Нежный латте с большим количеством молока.",
+      "https://avatars.mds.yandex.net/get-sprav-products/13672565/2a00000191e5ea9400c534d4276d4951f5aa/orig",
+    price: "190 ₽",
+    category: "Бургеры",
   },
   {
     id: 3,
-    name: "Печенье",
-    price: "80 ₽", // Placeholder price
+    name: "Пицца Цезарь 30 и 35 см",
+    description:
+      "Соус цезарь, филе цыпленка, салат, пармезан, моцарелла, томаты",
     image:
-      "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-    description: "Свежее домашнее печенье в ассортименте.",
+      "https://avatars.mds.yandex.net/get-sprav-products/1424222/2a000001920a0622ab76d6fe95829d4bc09a/orig",
+    price: "270 ₽",
+    category: "Пицца",
   },
   {
     id: 4,
-    name: "Сэндвич",
-    price: "250 ₽", // Placeholder price
+    name: "Таше с курицей",
+    description:
+      "В мире фастфуда таше с курицей занимает особое место. Это блюдо, которое создается из курицы, которая приобретает золотистую корочку, зажаренную на гриле.",
     image:
-      "https://avatars.mds.yandex.net/i?id=dbafb4343d9e7d64cadab295fd22ed20f89b4d8a-10595999-images-thumbs&n=13", // Placeholder image
-    description: "Сытный сэндвич с курицей и овощами.",
+      "https://avatars.mds.yandex.net/get-sprav-products/2413620/2a00000191dc5fb80618bfd729cbc7b3e4ca/orig",
+    price: "229 ₽",
+    category: "Шаурма",
   },
 ];
 
