@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Button } from "@telegram-apps/telegram-ui";
+import { useCartStore } from "@/stores/cart.store";
+import { toast } from "react-toastify";
 
 interface Product {
   id: number;
@@ -20,6 +22,18 @@ export default function SelectedProduct({
   selectedProduct,
   handleCloseModal,
 }: props) {
+  const { addItem } = useCartStore();
+
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation(); // Prevent card click when clicking the button
+    addItem({
+      id: product.id.toString(),
+      name: product.name,
+      price: parseFloat(product.price),
+      image: product.image,
+    });
+    toast.success(`${product.name} добавлен в корзину ! `);
+  };
   return (
     <>
       <motion.div
@@ -58,7 +72,10 @@ export default function SelectedProduct({
               {selectedProduct.description}
             </p>
             <div className="flex gap-4">
-              <Button className="inline-flex items-center px-4 py-3 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 cursor-pointer hover:-translate-y-1">
+              <Button
+                onClick={(e) => handleAddToCart(e, selectedProduct)}
+                className="inline-flex items-center px-4 py-3 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 cursor-pointer hover:-translate-y-1"
+              >
                 В корзину
               </Button>
               <Button

@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import FilterProducts from "@/components/filterProducts";
+import { useCartStore } from "@/stores/cart.store";
+import { toast, ToastContainer } from "react-toastify";
 
 interface Product {
   id: number;
@@ -20,6 +22,7 @@ export default function Menu() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const { addItem, items } = useCartStore();
 
   const handleCardClick = (product: Product) => {
     setSelectedProduct(product);
@@ -27,6 +30,23 @@ export default function Menu() {
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation(); // Prevent card click when clicking the button
+    addItem({
+      id: product.id.toString(),
+      name: product.name,
+      price: parseFloat(product.price),
+      image: product.image,
+    });
+    toast.success(`${product.name} добавлен в корзину ! `);
+  };
+
+  const getItemQuantity = (productId: number) => {
+    return (
+      items.find((item) => item.id === productId.toString())?.quantity || 0
+    );
   };
 
   useEffect(() => {
@@ -76,6 +96,7 @@ export default function Menu() {
 
   return (
     <>
+      <ToastContainer />
       <section className="py-12 px-4 relative mb-20">
         <h1 className="text-3xl text-center mb-10">Наше меню</h1>
 
@@ -117,9 +138,24 @@ export default function Menu() {
               </div>
               <div className="p-4 text-gray-900 dark:text-white">
                 <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {product.price} ₽
-                </p>
+                <div className="flex justify-between items-center">
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {product.price} ₽
+                  </p>
+                  <div className="flex items-center gap-2">
+                    {getItemQuantity(product.id) > 0 && (
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
+                        В корзине: {getItemQuantity(product.id)}
+                      </span>
+                    )}
+                    <button
+                      onClick={(e) => handleAddToCart(e, product)}
+                      className="bg-gray-800 text-white px-4 py-2 rounded hover:bg- transition-colors"
+                    >
+                      В корзину
+                    </button>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}

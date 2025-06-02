@@ -4,6 +4,9 @@ import { AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/product-card";
 import SelectedProduct from "@/components/selected-product";
 import { motion } from "framer-motion";
+import { Button } from "@telegram-apps/telegram-ui";
+import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 interface Product {
   id: number;
@@ -70,6 +73,7 @@ export default function PopularProducts() {
 
   return (
     <section className="py-20 px-4 relative mb-10 bg-white">
+      <ToastContainer />
       <div className="max-w-7xl mx-auto">
         <motion.h2
           className="text-4xl font-bold text-center mb-4 text-gray-900"
@@ -104,6 +108,13 @@ export default function PopularProducts() {
               />
             </motion.div>
           ))}
+        </div>
+        <div className="flex justify-center mt-15">
+          <Link href="/menu">
+            <Button className="bg-gray-700 text-white p-3 rounded-2xl">
+              Смотреть все меню
+            </Button>
+          </Link>
         </div>
       </div>
 

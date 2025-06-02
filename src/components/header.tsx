@@ -118,7 +118,7 @@ export default function Header() {
             }}
           >
             <Link
-              href="/"
+              href="/cart"
               className="hover:opacity-80 transition-opacity font-medium"
               style={{
                 transitionDelay: isVisible ? "1000ms" : "0ms",

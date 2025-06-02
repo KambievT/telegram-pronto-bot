@@ -1,8 +1,12 @@
+import { useCartStore } from "@/stores/cart.store";
 import { Home, NotebookText, ShoppingBag, UserPen } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
+  const { items } = useCartStore();
+
+  const quantityItems = items.length;
   return (
     <footer className="bg-gray-700/80 backdrop-blur-2xl flex flex-col items-center justify-center my_rounded fixed bottom-0 w-full text-white py-5">
       <nav className="flex items-center gap-8" id="footer__nav">
@@ -14,10 +18,13 @@ export default function Footer() {
           <NotebookText size={32} />
           <span className="text-sm mt-1">Меню</span>
         </Link>
-        <div className="flex flex-col items-center">
+        <Link href="/cart" className="flex flex-col items-center relative">
+          <div className="absolute w-6 h-6 bg-gray-700 right-2 rounded-full  text-center ">
+            {quantityItems}
+          </div>
           <ShoppingBag size={32} />
           <span className="text-sm mt-1">Корзина</span>
-        </div>
+        </Link>
         <Link href="/profile" className="flex flex-col items-center">
           <UserPen size={32} />
           <span className="text-sm mt-1">Профиль</span>
