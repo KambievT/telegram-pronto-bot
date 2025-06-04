@@ -52,7 +52,7 @@ export default function SelectedProduct({
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative w-full h-64">
+          <div className="relative w-full h-[500px]">
             <Image
               src={selectedProduct.image}
               alt={selectedProduct.name}
@@ -60,30 +60,30 @@ export default function SelectedProduct({
               style={{ objectFit: "cover" }}
               priority
             />
-          </div>
-          <div className="p-6">
-            <h3 className="text-2xl font-semibold mb-2">
-              {selectedProduct.name}
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 mb-4 text-xl">
-              {selectedProduct.price} ₽
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              {selectedProduct.description}
-            </p>
-            <div className="flex gap-4">
-              <Button
-                onClick={(e) => handleAddToCart(e, selectedProduct)}
-                className="inline-flex items-center px-4 py-3 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 cursor-pointer hover:-translate-y-1"
-              >
-                В корзину
-              </Button>
-              <Button
-                onClick={handleCloseModal}
-                className="inline-flex items-center px-4 py-3 bg-transparent border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 cursor-pointer hover:-translate-y-1"
-              >
-                Закрыть
-              </Button>
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+              <h3 className="text-2xl font-semibold mb-2 text-white">
+                {selectedProduct.name}
+              </h3>
+              <p className="text-white mb-4 text-xl">
+                {selectedProduct.price} ₽
+              </p>
+              <p className="text-gray-200 mb-6">
+                {selectedProduct.description}
+              </p>
+              <div className="flex gap-4">
+                <Button
+                  onClick={(e) => handleAddToCart(e, selectedProduct)}
+                  className="bg-gray-700/90 text-white px-4 py-2 rounded hover:bg-gray-900 transition-colors"
+                >
+                  В корзину
+                </Button>
+                <Button
+                  onClick={handleCloseModal}
+                  className="bg-gray-700/90 text-white px-4 py-2 rounded hover:bg-gray-900 transition-colors"
+                >
+                  Закрыть
+                </Button>
+              </div>
             </div>
           </div>
         </motion.div>

@@ -2,11 +2,25 @@ import { useCartStore } from "@/stores/cart.store";
 import { Home, NotebookText, ShoppingBag, UserPen } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   const { items } = useCartStore();
 
   const quantityItems = items.length;
+
+  const shakeAnimation = {
+    initial: { rotate: 0 },
+    animate: {
+      rotate: [0, -10, 10, -10, 10, 0],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        repeatDelay: 2,
+      },
+    },
+  };
+
   return (
     <footer className="bg-gray-700/80 backdrop-blur-2xl flex flex-col items-center justify-center my_rounded fixed bottom-0 w-full text-white py-5">
       <nav className="flex items-center gap-8" id="footer__nav">
@@ -19,10 +33,16 @@ export default function Footer() {
           <span className="text-sm mt-1">Меню</span>
         </Link>
         <Link href="/cart" className="flex flex-col items-center relative">
-          <div className="absolute w-6 h-6 bg-gray-700 right-2 rounded-full  text-center ">
+          <div className="absolute w-6 h-6 bg-gray-700 right-2 rounded-full text-center z-10">
             {quantityItems}
           </div>
-          <ShoppingBag size={32} />
+          <motion.div
+            initial="initial"
+            animate={quantityItems > 0 ? "animate" : "initial"}
+            variants={shakeAnimation}
+          >
+            <ShoppingBag size={32} />
+          </motion.div>
           <span className="text-sm mt-1">Корзина</span>
         </Link>
         <Link href="/profile" className="flex flex-col items-center">

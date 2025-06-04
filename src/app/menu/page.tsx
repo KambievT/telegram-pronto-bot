@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import FilterProducts from "@/components/filterProducts";
 import { useCartStore } from "@/stores/cart.store";
 import { toast, ToastContainer } from "react-toastify";
+import { Button } from "@telegram-apps/telegram-ui";
 
 interface Product {
   id: number;
@@ -123,10 +124,10 @@ export default function Menu() {
                 damping: 17,
               }}
               onClick={() => handleCardClick(product)}
-              className="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg duration-300 cursor-pointer border border-gray-200 dark:border-gray-600 hover:scale-105 transition-all"
+              className="bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md hover:shadow-lg duration-300 cursor-pointer border border-gray-200 dark:border-gray-600 hover:scale-105 transition-all relative"
               whileTap={{ scale: 0.98 }}
             >
-              <div className="relative w-full h-48">
+              <div className="relative w-full h-full min-h-[300px]">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -135,25 +136,25 @@ export default function Menu() {
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
-              </div>
-              <div className="p-4 text-gray-900 dark:text-white">
-                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                <div className="flex justify-between items-center">
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {product.price} ₽
-                  </p>
-                  <div className="flex items-center gap-2">
-                    {getItemQuantity(product.id) > 0 && (
-                      <span className="text-sm text-gray-600 dark:text-gray-300">
-                        В корзине: {getItemQuantity(product.id)}
-                      </span>
-                    )}
-                    <button
-                      onClick={(e) => handleAddToCart(e, product)}
-                      className="bg-gray-800 text-white px-4 py-2 rounded hover:bg- transition-colors"
-                    >
-                      В корзину
-                    </button>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <h3 className="text-xl font-semibold mb-2 text-white">
+                    {product.name}
+                  </h3>
+                  <div className="flex justify-between items-center">
+                    <p className="text-white">{product.price} ₽</p>
+                    <div className="flex items-center gap-2">
+                      {getItemQuantity(product.id) > 0 && (
+                        <span className="text-sm text-white">
+                          В корзине: {getItemQuantity(product.id)}
+                        </span>
+                      )}
+                      <Button
+                        onClick={(e) => handleAddToCart(e, product)}
+                        className="bg-gray-700/90 text-white px-4 py-2 rounded hover:bg-gray-900 transition-colors"
+                      >
+                        В корзину
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import Link from "next/link";
+import { Button } from "@telegram-apps/telegram-ui";
 
 export default function Cart() {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } =
@@ -123,9 +124,11 @@ export default function Cart() {
             <span className="text-lg font-semibold">Итого:</span>
             <span className="text-2xl font-bold">{totalPrice()} ₽</span>
           </div>
-          <button className="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors">
-            Оформить заказ
-          </button>
+          <Link href="/pay-cart">
+            <Button className="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors">
+              Оформить заказ
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
