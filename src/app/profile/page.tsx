@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { API_ENDPOINTS } from "@/constants/api";
 
 interface ProfileData {
   username?: string;
@@ -18,16 +19,13 @@ export default function Profile() {
     const getProfile = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          "https://tg-pronto-backend-production.up.railway.app/auth/get-profile",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ telegramId }),
-          }
-        );
+        const response = await fetch(API_ENDPOINTS.GET_PROFILE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ telegramId }),
+        });
 
         if (!response.ok) {
           throw new Error("Network response was not ok");

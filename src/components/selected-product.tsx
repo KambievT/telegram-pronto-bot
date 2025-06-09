@@ -45,14 +45,18 @@ export default function SelectedProduct({
         transition={{ duration: 0.2 }}
       >
         <motion.div
-          className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-xl max-w-md w-full relative text-gray-900 dark:text-white"
+          className="relative max-w-md w-full overflow-hidden shadow-2xl rounded-3xl border-2 border-orange-100"
+          style={{
+            background: `linear-gradient(135deg, #fff 80%, #ffe5b2 100%)`,
+            boxShadow: "0 8px 32px 0 rgba(255, 165, 0, 0.15)",
+          }}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative w-full h-[500px]">
+          <div className="relative w-full h-[340px] md:h-[400px]">
             <Image
               src={selectedProduct.image}
               alt={selectedProduct.name}
@@ -60,30 +64,33 @@ export default function SelectedProduct({
               style={{ objectFit: "cover" }}
               priority
             />
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
-              <h3 className="text-2xl font-semibold mb-2 text-white">
-                {selectedProduct.name}
-              </h3>
-              <p className="text-white mb-4 text-xl">
-                {selectedProduct.price} ₽
-              </p>
-              <p className="text-gray-200 mb-6">
-                {selectedProduct.description}
-              </p>
-              <div className="flex gap-4">
-                <Button
-                  onClick={(e) => handleAddToCart(e, selectedProduct)}
-                  className="bg-gray-700/90 text-white px-4 py-2 rounded hover:bg-gray-900 transition-colors"
-                >
-                  В корзину
-                </Button>
-                <Button
-                  onClick={handleCloseModal}
-                  className="bg-gray-700/90 text-white px-4 py-2 rounded hover:bg-gray-900 transition-colors"
-                >
-                  Закрыть
-                </Button>
-              </div>
+            <div className="absolute top-2 left-2 bg-white/80 text-orange-700 text-xs px-3 py-1 rounded-full shadow font-semibold">
+              {selectedProduct.name}
+            </div>
+          </div>
+          <div className="p-6">
+            <h3 className="text-2xl font-extrabold mb-2 text-orange-900">
+              {selectedProduct.name}
+            </h3>
+            <p className="text-lg text-orange-700 mb-4">
+              {selectedProduct.price}
+            </p>
+            <p className="text-base text-orange-800 mb-6 min-h-[48px]">
+              {selectedProduct.description}
+            </p>
+            <div className="flex gap-4 flex-col md:flex-row">
+              <Button
+                onClick={(e) => handleAddToCart(e, selectedProduct)}
+                className="bg-gradient-to-r from-orange-500 to-yellow-400 text-white px-6 py-3 rounded-xl font-bold shadow hover:from-orange-600 hover:to-yellow-500 transition-all text-lg w-full md:w-auto"
+              >
+                В корзину
+              </Button>
+              <Button
+                onClick={handleCloseModal}
+                className="bg-white text-orange-700 border-2 border-orange-400 hover:bg-orange-50 rounded-xl px-6 py-3 font-bold shadow transition-all text-lg w-full md:w-auto"
+              >
+                Закрыть
+              </Button>
             </div>
           </div>
         </motion.div>

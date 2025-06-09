@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 
 const features = [
   {
-    title: "Быстрая доставка",
-    description: "Получите ваш заказ в течение 30-120 минут после оформления",
+    title: "Быстрая получение",
+    description: "Получите ваш заказ в течение 15-30 минут после оформления",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-8 h-8"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -26,7 +26,7 @@ const features = [
     description: "Все блюда проходят тщательную проверку перед отправкой",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-8 h-8"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -46,7 +46,7 @@ const features = [
       "Используйте различные способы оплаты с гарантией безопасности",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-8 h-8"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -65,7 +65,7 @@ const features = [
     description: "Средний чек всего ~400 рублей за вкусный и сытный обед",
     icon: (
       <svg
-        className="w-6 h-6"
+        className="w-8 h-8"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -83,8 +83,11 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gradient-to-br from-orange-50 via-yellow-50 to-white relative overflow-hidden">
+      {/* Декоративные круги */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-2xl opacity-30 animate-pulse" />
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-yellow-100 rounded-full blur-2xl opacity-20 animate-pulse" />
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -92,10 +95,10 @@ const Features = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-orange-900 mb-4 drop-shadow-lg">
             Почему выбирают нас
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-orange-700 max-w-2xl mx-auto font-medium drop-shadow">
             Мы стремимся предоставить лучший сервис и качество для наших
             клиентов
           </p>
@@ -105,17 +108,19 @@ const Features = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-gradient-to-br from-orange-200/80 via-yellow-100/80 to-white/80 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-orange-100 flex flex-col items-center text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <div className="text-blue-400 mb-6 text-4xl">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-4">
+              <div className="text-orange-500 mb-6 text-5xl flex items-center justify-center">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-bold text-orange-900 mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-200 leading-relaxed">
+              <p className="text-orange-700 leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

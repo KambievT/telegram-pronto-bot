@@ -7,6 +7,7 @@ import FilterProducts from "@/components/filterProducts";
 import { useCartStore } from "@/stores/cart.store";
 import { toast, ToastContainer } from "react-toastify";
 import { Button } from "@telegram-apps/telegram-ui";
+import { API_ENDPOINTS } from "@/constants/api";
 
 interface Product {
   id: number;
@@ -53,15 +54,12 @@ export default function Menu() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          "https://tg-pronto-backend-production.up.railway.app/menu/get-menu",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(API_ENDPOINTS.GET_MENU, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const data = await response.json();
         setProducts(data);
         setLoading(false);

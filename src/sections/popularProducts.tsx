@@ -72,11 +72,11 @@ export default function PopularProducts() {
   };
 
   return (
-    <section className="py-20 px-4 relative mb-10 bg-white">
+    <section className="py-20 px-4 relative mb-10 bg-gradient-to-br from-orange-50 via-yellow-50 to-white overflow-x-hidden">
       <ToastContainer />
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl font-bold text-center mb-4 text-gray-900"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-4 text-orange-900 drop-shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -85,7 +85,7 @@ export default function PopularProducts() {
           Популярные блюда
         </motion.h2>
         <motion.p
-          className="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto"
+          className="text-xl md:text-2xl text-orange-700 text-center mb-12 max-w-2xl mx-auto font-medium drop-shadow"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -93,7 +93,10 @@ export default function PopularProducts() {
         >
           Попробуйте наши самые популярные блюда и напитки
         </motion.p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:overflow-visible overflow-x-auto pb-4 md:pb-0"
+          style={{ scrollSnapType: "x mandatory" }}
+        >
           {products.map((product, index) => (
             <motion.div
               key={product.id}
@@ -101,6 +104,8 @@ export default function PopularProducts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="min-w-[270px] md:min-w-0"
+              style={{ scrollSnapAlign: "start" }}
             >
               <ProductCard
                 product={product}
@@ -109,9 +114,9 @@ export default function PopularProducts() {
             </motion.div>
           ))}
         </div>
-        <div className="flex justify-center mt-15">
+        <div className="flex justify-center mt-10">
           <Link href="/menu">
-            <Button className="bg-gray-700 text-white p-3 rounded-2xl">
+            <Button className="bg-gradient-to-r from-orange-500 to-yellow-400 text-white p-3 rounded-2xl font-bold shadow-lg hover:from-orange-600 hover:to-yellow-500 transition-all">
               Смотреть все меню
             </Button>
           </Link>

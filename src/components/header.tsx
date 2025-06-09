@@ -47,7 +47,7 @@ export default function Header() {
   return (
     <>
       <header
-        className="flex items-center justify-center p-4 relative"
+        className="flex items-center justify-center p-4 relative shadow-lg bg-gradient-to-r from-orange-100 via-yellow-50 to-white z-30"
         style={{
           backgroundColor: "var(--tg-theme-bg-color)",
           color: "var(--tg-theme-text-color)",
@@ -71,9 +71,11 @@ export default function Header() {
           >
             <Link
               href="/"
-              className="hover:opacity-80 transition-opacity font-medium"
+              className="hover:text-orange-600 transition-colors duration-150 font-semibold text-orange-900 text-lg px-3 py-1 rounded-xl hover:bg-orange-100"
               style={{
                 transitionDelay: isVisible ? "1000ms" : "0ms",
+                transitionProperty: "opacity",
+                transitionDuration: "700ms",
                 opacity: isVisible ? 1 : 0,
               }}
             >
@@ -81,9 +83,11 @@ export default function Header() {
             </Link>
             <Link
               href="/menu"
-              className="hover:opacity-80 transition-opacity font-medium"
+              className="hover:text-orange-600 transition-colors duration-150 font-semibold text-orange-900 text-lg px-3 py-1 rounded-xl hover:bg-orange-100"
               style={{
                 transitionDelay: isVisible ? "1200ms" : "0ms",
+                transitionProperty: "opacity",
+                transitionDuration: "700ms",
                 opacity: isVisible ? 1 : 0,
               }}
             >
@@ -91,7 +95,7 @@ export default function Header() {
             </Link>
           </nav>
           <h1
-            className={`text-3xl font-bold my_cursive_font  transition-all duration-1500 ${
+            className={`text-4xl font-extrabold my_cursive_font drop-shadow-lg transition-all duration-1500 ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
             style={{
@@ -119,9 +123,11 @@ export default function Header() {
           >
             <Link
               href="/cart"
-              className="hover:opacity-80 transition-opacity font-medium"
+              className="hover:text-orange-600 transition-colors duration-150 font-semibold text-orange-900 text-lg px-3 py-1 rounded-xl hover:bg-orange-100"
               style={{
                 transitionDelay: isVisible ? "1000ms" : "0ms",
+                transitionProperty: "opacity",
+                transitionDuration: "700ms",
                 opacity: isVisible ? 1 : 0,
               }}
             >
@@ -129,9 +135,11 @@ export default function Header() {
             </Link>
             <Link
               href="/profile"
-              className="hover:opacity-80 transition-opacity font-medium"
+              className="hover:text-orange-600 transition-colors duration-150 font-semibold text-orange-900 text-lg px-3 py-1 rounded-xl hover:bg-orange-100"
               style={{
                 transitionDelay: isVisible ? "1200ms" : "0ms",
+                transitionProperty: "opacity",
+                transitionDuration: "700ms",
                 opacity: isVisible ? 1 : 0,
               }}
             >
