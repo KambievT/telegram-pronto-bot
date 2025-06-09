@@ -5,10 +5,47 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import Link from "next/link";
 import { Button } from "@telegram-apps/telegram-ui";
+import { useEffect, useState } from "react";
+import { FaCoins } from "react-icons/fa";
 
 export default function Cart() {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } =
     useCartStore();
+
+  // Анимированная итоговая цена
+  const [animatedTotal, setAnimatedTotal] = useState(0);
+  useEffect(() => {
+    let start = animatedTotal;
+    const end = totalPrice();
+    if (start === end) return;
+    const duration = 900; // ms
+    const stepTime = 18;
+    const steps = Math.ceil(duration / stepTime);
+    let currentStep = 0;
+    const increment = (end - start) / steps;
+    let current = start;
+    const interval = setInterval(() => {
+      currentStep++;
+      current += increment;
+      if (currentStep >= steps) {
+        setAnimatedTotal(end);
+        clearInterval(interval);
+      } else {
+        setAnimatedTotal(Math.round(current));
+      }
+    }, stepTime);
+    return () => clearInterval(interval);
+  }, [items, totalPrice]);
+
+  // Для анимации scale итоговой суммы
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    if (animatedTotal !== totalPrice()) {
+      setScale(1.12);
+      const timeout = setTimeout(() => setScale(1), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [animatedTotal, totalPrice]);
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity < 1) {
@@ -107,7 +144,7 @@ export default function Cart() {
                 className={
                   `relative h-44 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-orange-100 via-yellow-50 to-white border border-orange-100 flex ` +
                   "sm:h-44 " +
-                  "h-56 min-h-[200px]"
+                  "h-60 min-h-[200px]"
                 }
               >
                 <div className="relative w-40 h-full flex-shrink-0">
@@ -165,8 +202,16 @@ export default function Cart() {
             <span className="text-xl font-semibold text-orange-900">
               Итого:
             </span>
-            <span className="text-3xl font-extrabold text-orange-700">
-              {totalPrice()} ₽
+            <span
+              className="flex items-center gap-2 text-4xl font-extrabold bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-600 bg-clip-text text-transparent drop-shadow-lg select-none"
+              style={{
+                filter: "drop-shadow(0 2px 8px #ffe06688)",
+                transition: "transform 0.3s cubic-bezier(.4,2,.6,1)",
+                transform: `scale(${scale})`,
+              }}
+            >
+              <FaCoins className="text-yellow-400 drop-shadow mr-1" size={32} />
+              {animatedTotal.toLocaleString()} ₽
             </span>
           </div>
           <Link href="/pay-cart" className="w-full">

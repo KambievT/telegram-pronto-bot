@@ -56,7 +56,7 @@ export default function SelectedProduct({
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative w-full h-[340px] md:h-[400px]">
+          <div className="relative w-full h-[220px] md:h-[320px] min-h-[140px]">
             <Image
               src={selectedProduct.image}
               alt={selectedProduct.name}
